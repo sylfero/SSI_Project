@@ -1,7 +1,6 @@
 ﻿using NeuralNetwork;
 using NeuralNetwork.ActivationFunctions;
 using System;
-using System.IO;
 using System.Linq;
 
 namespace NeuralOperator
@@ -52,9 +51,6 @@ namespace NeuralOperator
             Console.WriteLine(network.Accuracy);
         }
 
-        public static void Serialize(string path)
-        {
-            File.WriteAllText(path + "network.json", network.Serialize());
-        }
+        public static void Serialize(string path) => network.Serialize(path + "network.csv");
     }
 }

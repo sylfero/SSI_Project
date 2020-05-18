@@ -1,10 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace NeuralNetwork
 {
-    [JsonObject(IsReference = true)]
-    public class Synapse
+    internal class Synapse
     {
         private Neuron fromNeuron;
         private Neuron toNeuron;

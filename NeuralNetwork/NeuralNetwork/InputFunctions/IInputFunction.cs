@@ -2,7 +2,7 @@
 
 namespace NeuralNetwork.InputFunctions
 {
-    public interface IInputFunction
+    internal interface IInputFunction
     {
         double Calculate(List<Synapse> inputs);
     }

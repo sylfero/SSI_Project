@@ -1,28 +1,56 @@
-﻿using Newtonsoft.Json;
+﻿using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace NeuralNetwork
 {
     public static class Serializer
     {
-        public static string Serialize(this Network network)
+        public static void Serialize(this Network network, string path)
         {
-            var settings = new JsonSerializerSettings()
+            //Input layer inputs don't need weights
+            string[] output = new string[network.Layers.Count - 1];
+
+            for (int i = network.Layers.Count - 1; i > 0; i--)
             {
-                TypeNameHandling = TypeNameHandling.Auto,
-                Formatting = Formatting.Indented,
-                ObjectCreationHandling = ObjectCreationHandling.Replace,
-            };
-            return JsonConvert.SerializeObject(network, settings);
+                StringBuilder builder = new StringBuilder();
+
+                for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
+                {
+                    for (int k = 0; k < network.Layers[i].Neurons[j].Inputs.Count; k++)
+                    {
+                        builder.Append(network.Layers[i].Neurons[j].Inputs[k].Weight + ",");
+                    }
+
+                    builder.Length--;
+                    builder.Append("|");
+                }
+
+                builder.Length--;
+                output[i - 1] = builder.ToString();
+            }
+
+            File.WriteAllLines(path, output.ToList());
         }
 
-        public static Network Deserialize(this string json)
+        
+        public static void Deserialize(this Network network, string path)
         {
-            var settings = new JsonSerializerSettings()
+            string[] input = File.ReadAllLines(path);
+
+            for (int i = network.Layers.Count - 1; i > 0; i--)
             {
-                TypeNameHandling = TypeNameHandling.Auto,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects
-            };
-            return JsonConvert.DeserializeObject<Network>(json, settings);
+                string[] neurons = input[i - 1].Split('|');
+
+                for (int j = 0; j < network.Layers[i].Neurons.Count; j++)
+                {
+                    string[] synapses = neurons[j].Split(',');
+                    for (int k = 0; k < network.Layers[i].Neurons[j].Inputs.Count; k++)
+                    {
+                        network.Layers[i].Neurons[j].Inputs[k].Weight = double.Parse(synapses[k]);
+                    }
+                }
+            }
         }
     }
 }

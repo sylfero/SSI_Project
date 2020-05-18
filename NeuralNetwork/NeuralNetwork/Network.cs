@@ -8,10 +8,10 @@ namespace NeuralNetwork
     public class Network
     {
         public double Accuracy { get; set; }
-        public double LearningRate { get; set; }
-        public int[] NumberOfNeurons { get; set; }
+        internal double LearningRate { get; set; }
+        internal int[] NumberOfNeurons { get; set; }
 
-        public List<Layer> Layers { get; set; }
+        internal List<Layer> Layers { get; set; }
 
         public Network(double learningRate, IActivationFunction activationFunction, params int[] numberOfNeurons)
         {

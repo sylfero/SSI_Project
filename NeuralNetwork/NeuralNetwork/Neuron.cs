@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NeuralNetwork
 {
-    public class Neuron
+    internal class Neuron
     {
         public List<Synapse> Inputs { get; }
         public List<Synapse> Outputs { get; }

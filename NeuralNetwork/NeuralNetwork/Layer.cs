@@ -2,7 +2,7 @@
 
 namespace NeuralNetwork
 {
-    public class Layer
+    internal class Layer
     {
         public List<Neuron> Neurons { get; set; } = new List<Neuron>();
     }
