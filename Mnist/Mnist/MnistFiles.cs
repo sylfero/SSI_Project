@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 
-namespace NeuralNetwork
+namespace Mnist
 {
-    public static class Mnist
+    public static class MnistFiles
     {
         public static byte[][] ReadImages(string path)
         {
@@ -33,7 +34,7 @@ namespace NeuralNetwork
             {
                 long numberOfLabels = reader.BaseStream.Length - 8;
                 byte[][] data = new byte[numberOfLabels][];
-                
+
                 //Get rid of first two numbers
                 int magicNumber = reader.ReadInt32();
                 int numberOfItems = reader.ReadInt32();
@@ -42,6 +43,26 @@ namespace NeuralNetwork
                 {
                     data[i] = Enumerable.Repeat((byte)0, 10).ToArray();
                     data[i][reader.ReadByte()] = 1;
+                }
+
+                return data;
+            }
+        }
+
+        public static int[] ReadFullLables(string path)
+        {
+            using (BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open)))
+            {
+                long numberOfLabels = reader.BaseStream.Length - 8;
+                int[] data = new int[numberOfLabels];
+
+                //Get rid of first two numbers
+                int magicNumber = reader.ReadInt32();
+                int numberOfItems = reader.ReadInt32();
+
+                for (int i = 0; i < numberOfLabels; i++)
+                {
+                    data[i] = reader.ReadByte();
                 }
 
                 return data;
@@ -58,7 +79,7 @@ namespace NeuralNetwork
 
                 double max = data[i].Max();
                 double min = data[i].Min();
-                
+
                 for (int j = 0; j < data[i].Length; j++)
                 {
                     output[i][j] = (data[i][j] - min) / (max - min);

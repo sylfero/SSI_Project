@@ -2,6 +2,7 @@
 using NeuralNetwork.ActivationFunctions;
 using System;
 using System.Linq;
+using Mnist;
 
 namespace NeuralOperator
 {
@@ -13,10 +14,10 @@ namespace NeuralOperator
 
         public static void Train(double learningRatio, int epochs, string path, params int[] neuralLayers)
         {
-            byte[][] imagesByte = Mnist.ReadImages(path + "train-images.idx3-ubyte");
+            byte[][] imagesByte = MnistFiles.ReadImages(path + "train-images.idx3-ubyte");
             double[][] imagesDouble = imagesByte.Normalize();
 
-            byte[][] labelsByte = Mnist.ReadLabels(path + "train-labels.idx1-ubyte");
+            byte[][] labelsByte = MnistFiles.ReadLabels(path + "train-labels.idx1-ubyte");
             double[][] labelsDouble = labelsByte.Normalize();
 
             network = new Network(learningRatio, new SigmoidActivationFunction(), neuralLayers);
@@ -25,10 +26,10 @@ namespace NeuralOperator
 
         public static void Test(string path)
         {
-            byte[][] imagesByte = Mnist.ReadImages(path + "t10k-images.idx3-ubyte");
+            byte[][] imagesByte = MnistFiles.ReadImages(path + "t10k-images.idx3-ubyte");
             double[][] imagesDouble = imagesByte.Normalize();
 
-            byte[][] labelsByte = Mnist.ReadLabels(path + "t10k-labels.idx1-ubyte");
+            byte[][] labelsByte = MnistFiles.ReadLabels(path + "t10k-labels.idx1-ubyte");
             double[][] labelsDouble = labelsByte.Normalize();
 
             double[][] control = new double[labelsByte.Length][];

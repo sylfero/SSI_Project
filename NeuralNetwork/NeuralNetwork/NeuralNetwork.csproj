@@ -49,7 +49,6 @@
     <Compile Include="InputFunctions\IInputFunction.cs" />
     <Compile Include="InputFunctions\WeightedSumFunction.cs" />
     <Compile Include="Layer.cs" />
-    <Compile Include="Mnist.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
