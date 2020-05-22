@@ -9,7 +9,7 @@ namespace NeuralNetwork
         public static void Serialize(this Network network, string path)
         {
             //Input layer inputs don't need weights
-            string[] output = new string[network.Layers.Count - 1];
+            string[] output = new string[network.Layers.Count];
 
             for (int i = network.Layers.Count - 1; i > 0; i--)
             {
@@ -29,6 +29,7 @@ namespace NeuralNetwork
                 builder.Length--;
                 output[i - 1] = builder.ToString();
             }
+            output[output.Length - 1] = network.Accuracy.ToString();
 
             File.WriteAllLines(path, output.ToList());
         }
@@ -51,6 +52,8 @@ namespace NeuralNetwork
                     }
                 }
             }
+
+            network.Accuracy = double.Parse(input.Last());
         }
     }
 }

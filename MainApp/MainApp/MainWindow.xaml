@@ -1,0 +1,111 @@
+﻿<Window x:Class="MainApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:MainApp.ViewModel"
+        xmlns:local="clr-namespace:MainApp"
+        xmlns:resx ="clr-namespace:MainApp.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="318" Width="500" ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <vm:Converter x:Key="MousePosition"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <InkCanvas>
+            <InkCanvas.DefaultDrawingAttributes>
+                <DrawingAttributes x:Name="attribute" Width="10" Height="10" />
+            </InkCanvas.DefaultDrawingAttributes>
+            
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseMove">
+                    <cmd:EventToCommand Command="{Binding Drawing, Mode=OneWay}" EventArgsConverter="{StaticResource MousePosition}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+                
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <i:InvokeCommandAction Command="{Binding MouseDownEvent}"/>
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="PreviewMouseUp">
+                    <i:InvokeCommandAction Command="{Binding MouseUpEvent}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </InkCanvas>
+
+        <Grid Grid.Column="1" Background="#f0f0f0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Source}}"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Path=Methods}" SelectedItem="{Binding Path=CurrentMethod}"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Accuracy}}"/>
+                <Label Grid.Column="1" Content="{Binding Path=CurrentMethod.Accuracy}"/>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Result}}"/>
+                <Label Grid.Column="1" Content="{Binding Path=Output}"/>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Row="1" Content="{Binding Source={x:Static resx:Resources.Calculate}}" Command="{Binding Path=Calculate}"/>
+                    <Button Grid.Row="3" Content="{Binding Source={x:Static resx:Resources.Clear}}"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

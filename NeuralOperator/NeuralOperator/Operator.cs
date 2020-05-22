@@ -53,5 +53,7 @@ namespace NeuralOperator
         }
 
         public static void Serialize(string path) => network.Serialize(path + "network.csv");
+
+        public static void Deserialize(string path) => network.Deserialize(path + "network.csv");
     }
 }
