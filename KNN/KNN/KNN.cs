@@ -1,11 +1,20 @@
-﻿using System;
+﻿using Mnist;
+using System;
+using System.IO;
 using System.Linq;
 
 namespace KNN
 {
     public static class Knn
     {
-        public static int Classify(double[] input, double[][] trainData, int[] expected, int classes, int k)
+        private readonly static string directory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\Files\\";
+
+        private readonly static byte[][] trainImagesByte = MnistFiles.ReadImages(directory + "train-images.idx3-ubyte");
+        private readonly static double[][] trainData = trainImagesByte.Normalize();
+
+        private readonly static int[] expected = MnistFiles.ReadFullLables(directory + "train-labels.idx1-ubyte");
+
+        public static int Classify(double[] input, int classes, int k)
         {
             IndexAndDistance[] info = new IndexAndDistance[trainData.Length];
 
@@ -23,7 +32,7 @@ namespace KNN
             Array.Sort(info);
 
             //Get most possible class of input data
-            int result = Vote(info, expected, classes, k);
+            int result = Vote(info, classes, k);
 
             return result;
         }
@@ -38,7 +47,7 @@ namespace KNN
             return sum;
         }
 
-        private static int Vote(IndexAndDistance[] info, int[] expected, int classes, int k)
+        private static int Vote(IndexAndDistance[] info, int classes, int k)
         {
             int[] votes = new int[classes];
 

@@ -11,11 +11,6 @@ namespace KNNOperator
 
         static void Main(string[] args)
         {
-            byte[][] trainImagesByte = MnistFiles.ReadImages(directory + "train-images.idx3-ubyte");
-            double[][] trainImagesDouble = trainImagesByte.Normalize();
-
-            int[] trainLabels = MnistFiles.ReadFullLables(directory + "train-labels.idx1-ubyte");
-
             byte[][] testImagesByte = MnistFiles.ReadImages(directory + "t10k-images.idx3-ubyte");
             double[][] testImagesDouble = testImagesByte.Normalize();
 
@@ -23,17 +18,25 @@ namespace KNNOperator
 
             double acc = 0;
 
-            for (int i = 0; i < 100; i++)
+            int k = 10;
+            int part = 100;
+
+            for (int i = 0; i < part; i++)
             {
-                int output = Knn.Classify(testImagesDouble[i], trainImagesDouble, trainLabels, 10, 10);
+                int output = Knn.Classify(testImagesDouble[i], 10, k);
 
                 if (output == testLabels[i])
                 {
                     acc++;
                 }
             }
-            acc /= 100;
+            acc /= part;
             Console.WriteLine(acc);
+            using(StreamWriter writer = new StreamWriter(directory + "Knns\\knn.csv"))
+            {
+                writer.WriteLine(k);
+                writer.WriteLine(acc);
+            }
             Console.ReadKey();
         }
     }

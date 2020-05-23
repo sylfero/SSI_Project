@@ -25,7 +25,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <InkCanvas>
+        <InkCanvas Strokes="{Binding Path=Strokes}">
             <InkCanvas.DefaultDrawingAttributes>
                 <DrawingAttributes x:Name="attribute" Width="10" Height="10" />
             </InkCanvas.DefaultDrawingAttributes>
@@ -47,43 +47,40 @@
 
         <Grid Grid.Column="1" Background="#f0f0f0">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="70*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Source}}"/>
-                <ComboBox Grid.Column="1" ItemsSource="{Binding Path=Methods}" SelectedItem="{Binding Path=CurrentMethod}"/>
+                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Source}}" VerticalContentAlignment="Center"/>
+                <ComboBox Grid.Column="1" ItemsSource="{Binding Path=Methods}" SelectedItem="{Binding Path=CurrentMethod}" VerticalContentAlignment="Center"/>
             </Grid>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Accuracy}}"/>
-                <Label Grid.Column="1" Content="{Binding Path=CurrentMethod.Accuracy}"/>
+                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Accuracy}}" VerticalContentAlignment="Center"/>
+                <Label Grid.Column="1" Content="{Binding Path=CurrentMethod.Accuracy}" VerticalContentAlignment="Center"/>
             </Grid>
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="75*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Result}}"/>
-                <Label Grid.Column="1" Content="{Binding Path=Output}"/>
+                <Label Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Result}}" VerticalContentAlignment="Center"/>
+                <Label Grid.Column="1" Content="{Binding Path=Output}" VerticalContentAlignment="Center"/>
             </Grid>
 
             <Grid Grid.Row="3">
@@ -95,15 +92,15 @@
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="60*"/>
                     </Grid.RowDefinitions>
 
                     <Button Grid.Row="1" Content="{Binding Source={x:Static resx:Resources.Calculate}}" Command="{Binding Path=Calculate}"/>
-                    <Button Grid.Row="3" Content="{Binding Source={x:Static resx:Resources.Clear}}"/>
+                    <Button Grid.Row="3" Content="{Binding Source={x:Static resx:Resources.Clear}}" Command="{Binding Path=Clear}"/>
                 </Grid>
             </Grid>
         </Grid>

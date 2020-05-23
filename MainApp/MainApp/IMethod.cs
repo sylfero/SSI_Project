@@ -1,9 +1,11 @@
-﻿namespace MainApp
+﻿using System.Threading.Tasks;
+
+namespace MainApp
 {
     interface IMethod
     {
         double Accuracy { get; }
 
-        double Calculate(double[] input);
+        Task<double> Calculate(double[] input);
     }
 }

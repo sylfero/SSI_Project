@@ -2,6 +2,7 @@
 using NeuralNetwork.ActivationFunctions;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MainApp
 {
@@ -18,10 +19,11 @@ namespace MainApp
             Accuracy = network.Accuracy * 100;
         }
 
-        public double Calculate(double[] input)
+        public async Task<double> Calculate(double[] input)
         {
-            double[] output = network.Calculate(input);
-            return Array.IndexOf(output, output.Max());
+            double[] output = null;
+            await Task.Run(() => output = network.Calculate(input));
+            return Array.IndexOf(output, output.Max()); ;
         }
 
         public override string ToString()

@@ -15,23 +15,23 @@ namespace MainApp
             int toY = int.MinValue;
             bool empty = true;
 
-            for (int x = 0; x < bitmap.Width; x++)
+            for (int i = 0; i < bitmap.Width; i++)
             {
-                for (int y = 0; y < bitmap.Height; y++)
+                for (int j = 0; j < bitmap.Height; j++)
                 {
-                    Color pixel = bitmap.GetPixel(x, y);
+                    Color pixel = bitmap.GetPixel(i, j);
                     if (pixel.A > 0)
                     {
                         empty = false;
 
-                        if (x < fromX)
-                            fromX = x;
-                        if (x > toX)
-                            toX = x;
-                        if (y < fromY)
-                            fromY = y;
-                        if (y > toY)
-                            toY = y;
+                        if (i < fromX)
+                            fromX = i;
+                        if (i > toX)
+                            toX = i;
+                        if (j < fromY)
+                            fromY = j;
+                        if (j > toY)
+                            toY = j;
                     }
                 }
             }
@@ -56,7 +56,7 @@ namespace MainApp
             Graphics gfx = Graphics.FromImage(btm);
             gfx.CompositingQuality = CompositingQuality.HighQuality;
             gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            gfx.PixelOffsetMode = PixelOffsetMode.HighSpeed;
             gfx.SmoothingMode = SmoothingMode.AntiAlias;
             Rectangle rect = new Rectangle(0, 0, 20, 20);
             gfx.DrawImage(bitmap, rect, rectangle, GraphicsUnit.Pixel);
@@ -70,19 +70,19 @@ namespace MainApp
             Bitmap btm = Resize(rectangle, bitmap);
             Bitmap btm2 = new Bitmap(28, 28);
 
-            for (int x = 0; x < btm.Width; x++)
+            for (int i = 0; i < btm.Width; i++)
             {
-                for (int y = 0; y < btm.Height; y++)
+                for (int j = 0; j < btm.Height; j++)
                 {
-                    btm2.SetPixel(x + 4, y + 4, btm.GetPixel(x, y));
+                    btm2.SetPixel(i + 4, j + 4, btm.GetPixel(i, j));
                 }
             }
 
-            for (int x = 0; x < btm2.Width; x++)
+            for (int y = 0; y < btm2.Height; y++)
             {
-                for (int y = 0; y < btm2.Height; y++)
+                for (int x = 0; x < btm2.Width; x++)
                 {
-                    output.Add(btm2.GetPixel(y, x).A);
+                    output.Add(btm2.GetPixel(x, y).A);
                 }
             }
             return output.ToArray();

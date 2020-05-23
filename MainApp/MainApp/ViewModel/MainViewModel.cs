@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using MainApp.ViewModel.BaseClasses;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Windows.Ink;
 using System.Windows.Input;
 
 
@@ -23,15 +23,29 @@ namespace MainApp.ViewModel
             graphics = Graphics.FromImage(bitmap);
             mouseDown = false;
             Methods = new List<IMethod>();
+
             foreach (string file in Directory.GetFiles(R.Networks))
             {
                 Methods.Add(new NeuralMethod(file));
             }
+            foreach (string file in Directory.GetFiles(R.Knns))
+            {
+                Methods.Add(new KnnMethod(file));
+            }
+
             currentMethod = Methods[0];
+            Strokes = new StrokeCollection();
         }
 
-        private double output;
-        public double Output
+        private StrokeCollection strokes;
+        public StrokeCollection Strokes
+        {
+            get => strokes;
+            set => SetProperty(ref strokes, value);
+        }
+
+        private double? output;
+        public double? Output
         {
             get => output;
             set => SetProperty(ref output, value);
@@ -97,9 +111,22 @@ namespace MainApp.ViewModel
             {
                 if (calculate == null)
                 {
-                    calculate = new RelayCommand(() => Output = CurrentMethod.Calculate(BitmapOperations.GetInput(bitmap)));
+                    calculate = new RelayCommand(async () => Output = await CurrentMethod.Calculate(BitmapOperations.GetInput(bitmap)));
                 }
                 return calculate;
+            }
+        }
+
+        private ICommand clear;
+        public ICommand Clear
+        {
+            get
+            {
+                if (clear == null)
+                {
+                    clear = new RelayCommand(() => { Strokes = new StrokeCollection(); graphics.Clear(Color.Empty); Output = null; });
+                }
+                return clear;
             }
         }
     }
