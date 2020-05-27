@@ -32,6 +32,10 @@ namespace MainApp.ViewModel
             {
                 Methods.Add(new KnnMethod(file));
             }
+            foreach (string file in Directory.GetFiles(R.KnnsAug))
+            {
+                Methods.Add(new KnnAugMethod(file));
+            }
 
             currentMethod = Methods[0];
             Strokes = new StrokeCollection();

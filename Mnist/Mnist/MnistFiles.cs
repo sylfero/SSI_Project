@@ -111,6 +111,25 @@ namespace Mnist
             return output;
         }
 
+        public static List<(byte[], int)> AugmentationInt(this byte[][] data, int[] labels)
+        {
+            List<(byte[], int)> output = new List<(byte[], int)>();
+            List<Func<byte[], byte[]>> funcs = new List<Func<byte[], byte[]>>();
+            funcs.Add(Left);
+            funcs.Add(Right);
+            funcs.Add(Upside);
+            funcs.Add(Noise);
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                output.Add((data[i], labels[i]));
+                output.Add((funcs[random.Next(funcs.Count)](data[i]), labels[i]));
+            }
+
+            output.Shuffle();
+            return output;
+        }
+
         private static byte[] Left(byte[] input)
         {
             byte[] output = (byte[])input.Clone();
@@ -191,6 +210,17 @@ namespace Mnist
             for (int i = 0; i < data.Count; i++)
             {
                 (byte[], byte[]) tmp = data[i];
+                int r = random.Next(i, data.Count);
+                data[i] = data[r];
+                data[r] = tmp;
+            }
+        }
+
+        private static void Shuffle(this List<(byte[], int)> data)
+        {
+            for (int i = 0; i < data.Count; i++)
+            {
+                (byte[], int) tmp = data[i];
                 int r = random.Next(i, data.Count);
                 data[i] = data[r];
                 data[r] = tmp;

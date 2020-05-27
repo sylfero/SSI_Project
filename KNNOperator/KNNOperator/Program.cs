@@ -19,11 +19,11 @@ namespace KNNOperator
             double acc = 0;
 
             int k = 10;
-            int part = 100;
+            int part = 10;
 
             for (int i = 0; i < part; i++)
             {
-                int output = Knn.Classify(testImagesDouble[i], 10, k);
+                int output = Knn.ClassifyAug(testImagesDouble[i], 10, k);
 
                 if (output == testLabels[i])
                 {

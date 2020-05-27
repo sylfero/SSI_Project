@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="BitmapOperations.cs" />
     <Compile Include="IMethod.cs" />
+    <Compile Include="KnnAugMethod.cs" />
     <Compile Include="KnnMethod.cs" />
     <Compile Include="NeuralMethod.cs" />
     <Compile Include="ViewModel\Converter.cs" />

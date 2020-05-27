@@ -75,6 +75,6 @@ namespace NeuralOperator
             Console.WriteLine(network.Accuracy);
         }
 
-        public static void Serialize(string path) => network.Serialize(path + "Networks\\network.csv");
+        public static void Serialize(string path) => network.Serialize(path + "Networks\\network20.csv");
     }
 }

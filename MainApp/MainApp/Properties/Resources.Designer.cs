@@ -97,6 +97,15 @@ namespace MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ../../../../Files/KnnsAug.
+        /// </summary>
+        public static string KnnsAug {
+            get {
+                return ResourceManager.GetString("KnnsAug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ../../../../Files/Networks.
         /// </summary>
         public static string Networks {

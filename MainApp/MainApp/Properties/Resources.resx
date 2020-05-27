@@ -129,6 +129,9 @@
   <data name="Knns" xml:space="preserve">
     <value>../../../../Files/Knns</value>
   </data>
+  <data name="KnnsAug" xml:space="preserve">
+    <value>../../../../Files/KnnsAug</value>
+  </data>
   <data name="Networks" xml:space="preserve">
     <value>../../../../Files/Networks</value>
   </data>

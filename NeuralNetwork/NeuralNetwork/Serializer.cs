@@ -31,13 +31,13 @@ namespace NeuralNetwork
                 builder.Length--;
                 output[i - 1] = builder.ToString();
             }
-            string tmp = "";
+            StringBuilder tmp = new StringBuilder();
             foreach (int i in network.NumberOfNeurons)
             {
-                tmp += i + " ";
+                tmp.Append(i + " ");
             }
-            tmp.Trim();
-            output[output.Length - 2] = tmp;
+            tmp.Length--;
+            output[output.Length - 2] = tmp.ToString();
             output[output.Length - 1] = network.Accuracy.ToString();
 
             File.WriteAllLines(path, output.ToList());

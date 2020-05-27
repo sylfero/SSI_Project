@@ -1,5 +1,6 @@
 ﻿using Mnist;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -32,7 +33,43 @@ namespace KNN
             Array.Sort(info);
 
             //Get most possible class of input data
-            int result = Vote(info, classes, k);
+            int result = Vote(info, classes, k, expected);
+
+            return result;
+        }
+
+        public static int ClassifyAug(double[] input, int classes, int k)
+        {
+            List<(byte[], int)> aug = trainImagesByte.AugmentationInt(expected);
+
+            byte[][] images = new byte[aug.Count][];
+            int[] labels = new int[aug.Count];
+
+            for (int i = 0; i < aug.Count; i++)
+            {
+                images[i] = aug[i].Item1;
+                labels[i] = aug[i].Item2;
+            }
+
+            double[][] imagesDouble = images.Normalize();
+
+            IndexAndDistance[] info = new IndexAndDistance[imagesDouble.Length];
+
+            //Calculate distance for each element in trainData array and input
+            for (int i = 0; i < imagesDouble.Length; i++)
+            {
+                IndexAndDistance curr = new IndexAndDistance();
+                double dist = Distance(input, imagesDouble[i]);
+                curr.idx = i;
+                curr.dist = dist;
+                info[i] = curr;
+            }
+
+            //Sort distances
+            Array.Sort(info);
+
+            //Get most possible class of input data
+            int result = Vote(info, classes, k, labels);
 
             return result;
         }
@@ -47,7 +84,7 @@ namespace KNN
             return sum;
         }
 
-        private static int Vote(IndexAndDistance[] info, int classes, int k)
+        private static int Vote(IndexAndDistance[] info, int classes, int k, int[] expected)
         {
             int[] votes = new int[classes];
 
