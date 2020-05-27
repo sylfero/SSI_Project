@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using NeuralNetwork.ActivationFunctions;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -9,7 +11,7 @@ namespace NeuralNetwork
         public static void Serialize(this Network network, string path)
         {
             //Input layer inputs don't need weights
-            string[] output = new string[network.Layers.Count];
+            string[] output = new string[network.Layers.Count + 1];
 
             for (int i = network.Layers.Count - 1; i > 0; i--)
             {
@@ -29,15 +31,29 @@ namespace NeuralNetwork
                 builder.Length--;
                 output[i - 1] = builder.ToString();
             }
+            string tmp = "";
+            foreach (int i in network.NumberOfNeurons)
+            {
+                tmp += i + " ";
+            }
+            tmp.Trim();
+            output[output.Length - 2] = tmp;
             output[output.Length - 1] = network.Accuracy.ToString();
 
             File.WriteAllLines(path, output.ToList());
         }
 
         
-        public static void Deserialize(this Network network, string path)
+        public static Network Deserialize(string path)
         {
             string[] input = File.ReadAllLines(path);
+            string[] tmp = input[input.Length - 2].Split(' ');
+            int[] tmp2 = new int[tmp.Length];
+            for (int i =0; i< tmp.Length; i++)
+            {
+                tmp2[i] = int.Parse(tmp[i]);
+            }
+            Network network = new Network(0.1, new SigmoidActivationFunction(), tmp2);
 
             for (int i = network.Layers.Count - 1; i > 0; i--)
             {
@@ -54,6 +70,7 @@ namespace NeuralNetwork
             }
 
             network.Accuracy = double.Parse(input.Last());
+            return network;
         }
     }
 }

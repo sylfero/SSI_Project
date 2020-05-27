@@ -1,5 +1,4 @@
 ﻿using NeuralNetwork;
-using NeuralNetwork.ActivationFunctions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +13,7 @@ namespace MainApp
 
         public NeuralMethod(string path)
         {
-            network = new Network(0.1, new SigmoidActivationFunction(), 28 * 28, 32, 10);
-            network.Deserialize(path);
+            network = Serializer.Deserialize(path);
             Accuracy = network.Accuracy * 100;
         }
 

@@ -56,7 +56,7 @@ namespace MainApp
             Graphics gfx = Graphics.FromImage(btm);
             gfx.CompositingQuality = CompositingQuality.HighQuality;
             gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            gfx.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            gfx.PixelOffsetMode = PixelOffsetMode.HighQuality;
             gfx.SmoothingMode = SmoothingMode.AntiAlias;
             Rectangle rect = new Rectangle(0, 0, 20, 20);
             gfx.DrawImage(bitmap, rect, rectangle, GraphicsUnit.Pixel);

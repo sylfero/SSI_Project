@@ -23,7 +23,7 @@ namespace NeuralNetwork
 
         public void UpdateWeight(double learnRate, double delta)
         {
-            Weight += delta;
+            Weight += delta * learnRate;
         }
     }
 }

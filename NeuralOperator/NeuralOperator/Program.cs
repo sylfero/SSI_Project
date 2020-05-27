@@ -10,7 +10,7 @@ namespace NeuralOperator
         static void Main(string[] args)
         {
             Console.WriteLine("Please be patient...");
-            Operator.Train(learningRatio: 0.3, epochs: 10, path: directory, 28 * 28, 32, 10);
+            Operator.Train(learningRatio: 0.3, epochs: 1, path: directory, 28 * 28, 200, 10);
             Operator.Test(directory);
             Console.WriteLine("Accuracy: " + Operator.Accuracy * 100 + " %");
             Console.WriteLine("Want to serialize? (y/n)");
