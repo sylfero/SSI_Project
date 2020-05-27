@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Numerics;
 
 namespace MainApp
 {
@@ -63,18 +65,36 @@ namespace MainApp
             return btm;
         }
 
+        private static Point GetMassCenter(Bitmap bitmap)
+        {
+            var path = new List<Vector2>();
+            for (int y = 0; y < 20; y++)
+            {
+                for (int x = 0; x < 20; x++)
+                {
+                    if (bitmap.GetPixel(x, y).A > 0) path.Add(new Vector2(x, y));
+                }
+            }
+            Vector2 centroid = path.Aggregate((current, point) => current + point) / path.Count();
+            return new Point((int)centroid.X - 10, (int)centroid.Y - 10);
+        }
+
         public static double[] GetInput(Bitmap bitmap)
         {
             List<double> output = new List<double>();
             Rectangle rectangle = DrawSquare(bitmap);
-            Bitmap btm = Resize(rectangle, bitmap);
             Bitmap btm2 = new Bitmap(28, 28);
 
-            for (int i = 0; i < btm.Width; i++)
+            if (rectangle != Rectangle.Empty)
             {
-                for (int j = 0; j < btm.Height; j++)
+                Bitmap btm = Resize(rectangle, bitmap);
+                Point point = GetMassCenter(btm);
+                for (int i = 0; i < btm.Width; i++)
                 {
-                    btm2.SetPixel(i + 4, j + 6, btm.GetPixel(i, j));
+                    for (int j = 0; j < btm.Height; j++)
+                    {
+                        btm2.SetPixel(i + 4 - point.X, j + 4 - point.Y, btm.GetPixel(i, j));
+                    }
                 }
             }
 
