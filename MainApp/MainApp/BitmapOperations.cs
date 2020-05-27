@@ -74,7 +74,7 @@ namespace MainApp
             {
                 for (int j = 0; j < btm.Height; j++)
                 {
-                    btm2.SetPixel(i + 4, j + 4, btm.GetPixel(i, j));
+                    btm2.SetPixel(i + 4, j + 6, btm.GetPixel(i, j));
                 }
             }
 

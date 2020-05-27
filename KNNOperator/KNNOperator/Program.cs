@@ -18,7 +18,7 @@ namespace KNNOperator
 
             double acc = 0;
 
-            int k = 10;
+            int k = 1;
             int part = 100;
 
             for (int i = 0; i < part; i++)
