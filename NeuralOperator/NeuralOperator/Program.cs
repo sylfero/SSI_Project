@@ -5,7 +5,7 @@ namespace NeuralOperator
 {
     class Program
     {
-        readonly static string directory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\Files\\";
+        readonly static string directory = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.Parent.FullName + "\\Files\\Networks";
 
         static void Main(string[] args)
         {
