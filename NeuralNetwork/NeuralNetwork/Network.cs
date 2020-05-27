@@ -8,8 +8,8 @@ namespace NeuralNetwork
     public class Network
     {
         public double Accuracy { get; set; }
-        internal double LearningRate { get; set; }
-        internal int[] NumberOfNeurons { get; set; }
+        internal double LearningRate { get; set;  }
+        public int[] NumberOfNeurons { get; }
 
         internal List<Layer> Layers { get; set; }
 

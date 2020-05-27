@@ -19,11 +19,11 @@ namespace KNNOperator
             double acc = 0;
 
             int k = 10;
-            int part = 10;
+            int part = 100;
 
             for (int i = 0; i < part; i++)
             {
-                int output = Knn.ClassifyAug(testImagesDouble[i], 10, k);
+                int output = Knn.Classify(testImagesDouble[i], 10, k);
 
                 if (output == testLabels[i])
                 {
@@ -32,7 +32,7 @@ namespace KNNOperator
             }
             acc /= part;
             Console.WriteLine(acc);
-            using(StreamWriter writer = new StreamWriter(directory + "Knns\\knn.csv"))
+            using(StreamWriter writer = new StreamWriter(directory + "Knns\\knn" + k + ".csv"))
             {
                 writer.WriteLine(k);
                 writer.WriteLine(acc);

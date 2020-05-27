@@ -27,7 +27,7 @@ namespace MainApp
 
         public override string ToString()
         {
-            return "Knn " + Math.Round(Accuracy);
+            return "Knn " + k + " " + Math.Round(Accuracy);
         }
     }
 }

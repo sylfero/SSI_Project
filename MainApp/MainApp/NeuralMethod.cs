@@ -26,7 +26,7 @@ namespace MainApp
 
         public override string ToString()
         {
-            return "NeuralNetwork " + Math.Round(Accuracy);
+            return "NeuralNetwork " + network.NumberOfNeurons[1] + " " + Math.Round(Accuracy);
         }
     }
 }
